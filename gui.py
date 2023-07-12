@@ -4,8 +4,6 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QDesktopWidget, Q
 from PyQt5.QtCore import Qt,QSize,QCoreApplication
 from PyQt5.QtGui import QIcon, QPixmap
 
-os.system('python main.py')
-
 class MyWindow(QMainWindow):
     def __init__(self):
         super().__init__()
@@ -61,8 +59,10 @@ class MyWindow(QMainWindow):
                                 border-bottom-right-radius: 15px;
                             }
                                 """)
-        
+
+import pyautogui 
 def openSr():
+    pyautogui.hotkey('alt', 'tab')
     os.system('python main.py')
 
 app = QApplication(sys.argv)

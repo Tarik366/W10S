@@ -7,10 +7,19 @@ with sr.Microphone() as source:
     print("Say something!")
     audio = r.listen(source)
 
-print(get_kb_lang.get_language_id())
-# recognize speech using Sphinx
+import pyautogui
+import time
+import pyperclip
+
+def send_keys(keys):
+    pyperclip.copy(keys)
+    pyautogui.hotkey('ctrl', 'v')
+
+# recognize speech using Google
 try:
-    print(r.recognize_google(audio, language=get_kb_lang.get_language_id()))
+    translated_text = r.recognize_google(audio, language=get_kb_lang.get_language_id())
+    print(translated_text)
+    send_keys(translated_text)
 except sr.UnknownValueError:
     print("Google Speech Recognition could not understand audio")
 except sr.RequestError as e:

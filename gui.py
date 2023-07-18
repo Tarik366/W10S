@@ -3,8 +3,17 @@ import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QDesktopWidget, QWidget,QPushButton,QFrame,QMessageBox
 from PyQt5.QtCore import Qt,QSize,QCoreApplication
 from PyQt5.QtGui import QIcon, QPixmap
+import pyautogui 
+import keyboard
+import os
+import main
 
 class MyWindow(QMainWindow):
+    def openSr(self):
+        # TODO: make button bg color #03A9F4 when listening
+        pyautogui.hotkey('alt', 'tab')
+        print('Here!')
+        main.lisaten()
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Arayüz")
@@ -28,17 +37,17 @@ class MyWindow(QMainWindow):
         self.button.setIcon(QIcon("src/mic_white_48dp.png"))
         self.button.setIconSize(QSize(35, 35))
         self.button.setGeometry(0, 0, 60, 60)
-        self.button.clicked.connect(openSr)
+        self.button.clicked.connect(self.openSr)
         self.button.setStyleSheet("""
                             QPushButton {
                                 background: transparent; 
                                 padding: 0;
-                                border: none
+                                border: none;
+                                border-top-left-radius: 15px;
+                                border-bottom-left-radius: 15px;
                             }
                             QPushButton:hover {
                                 background: rgba(0, 0, 0, 0.5);
-                                border-top-left-radius: 15px;
-                                border-bottom-left-radius: 15px;
                             }
                                 """)
 
@@ -51,21 +60,24 @@ class MyWindow(QMainWindow):
                             QPushButton {
                                 background: transparent; 
                                 padding: 0;
-                                border: none
-                            }
-                            QPushButton:hover {
-                                background: rgba(150, 0, 0, 0.5);
+                                border: none;
                                 border-top-right-radius: 15px;
                                 border-bottom-right-radius: 15px;
                             }
+                            QPushButton:hover {
+                                background: rgba(150, 0, 0, 0.5);
+                            }
                                 """)
+        
+    def showEvent(self, event):
+        Thread(target = main.lisaten).start()
 
-import pyautogui 
-def openSr():
-    pyautogui.hotkey('alt', 'tab')
-    os.system('python main.py')
+from threading import Thread
 
 app = QApplication(sys.argv)
 window = MyWindow()
 window.show()
 sys.exit(app.exec())
+
+if __name__ == '__main__':
+    Thread(target = main.lisaten).start()

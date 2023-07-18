@@ -1,2 +1,2 @@
 python3 -m pip install -r requirements.txt
-python3 KeyChecker.py
+python3 KeyCheckerLinux.py

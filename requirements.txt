@@ -1,0 +1,3 @@
+keyboard
+speech_recognition
+PyQt5
